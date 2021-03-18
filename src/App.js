@@ -1,25 +1,37 @@
 import logo from './logo.svg';
+import React from 'react';
 import './App.css';
+import { Switch, Route} from 'react-router-dom';
+import Navbar from './components/Navbar';
+import CountriesList from './components/CountriesList';
+import CountryDetails from './components/CountryDetails';
+import jsonFile from './countries.json';
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+
+class App extends React.Component {
+
+  state = {
+    countries: jsonFile
+  }
+
+  render(){
+    return (
+      <div className="App">
+        <Navbar/>
+        <CountriesList countries={this.state.countries}/>
+        <Switch>
+          <Route 
+          path="/countries/:uid"
+          render={(historyProps) => {
+            return <CountryDetails {...historyProps}/>;
+          }}
+          />
+        </Switch>
+        
+        
+      </div>
+    )
+  }
 }
 
 export default App;
